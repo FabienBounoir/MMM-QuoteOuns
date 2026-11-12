@@ -2,6 +2,8 @@
 
 Module [MagicMirror²](https://magicmirror.builders) qui affiche des citations depuis la [Quote API](https://quote-ouns.vercel.app) : 14 langues, plus de 250 catégories, et une mise en page qui s'adapte à la région où vous le placez.
 
+![Citation affichée au centre du miroir](screenshot.png)
+
 - **Aucune dépendance**, aucune tâche planifiée : le module interroge l'API lui-même.
 - **Fonctionne hors ligne** : les dernières citations reçues sont gardées en cache et réaffichées au démarrage.
 - **S'adapte à sa position** : coin, centre, barre ou plein écran, en paysage comme en portrait.
@@ -63,3 +65,7 @@ Plusieurs instances peuvent cohabiter, par exemple une citation courte dans un c
 ```sh
 node test.js
 ```
+
+## Licence
+
+MIT
