@@ -1,0 +1,12 @@
+{
+	"name": "mmm-quoteouns",
+	"version": "1.0.0",
+	"description": "MagicMirror² module displaying quotes from the Quote API, in any language and any position",
+	"main": "MMM-QuoteOuns.js",
+	"scripts": {
+		"test": "node test.js"
+	},
+	"engines": {
+		"node": ">=18"
+	}
+}
