@@ -18,6 +18,10 @@ Pas de `npm install` nécessaire (Node 18 ou plus).
 
 ## Configuration
 
+> **Le plus simple : le [générateur de configuration](https://quote-ouns.vercel.app/magicmirror).** Choisissez la langue, les catégories et la position, regardez l'aperçu, puis copiez le bloc à coller dans `config/config.js`.
+
+Les langues disponibles sont listées sur [`/api/languages`](https://quote-ouns.vercel.app/api/languages), et les catégories d'une langue sur [`/api/categories?lang=fr`](https://quote-ouns.vercel.app/api/categories?lang=fr) (remplacez `fr` par la langue voulue).
+
 ```js
 {
 	module: "MMM-QuoteOuns",
