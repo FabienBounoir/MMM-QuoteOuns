@@ -91,7 +91,7 @@ Module.register("MMM-QuoteOuns", {
 
 		if (this.config.showAuthor && this.current.author) {
 			const author = document.createElement("div");
-			author.className = "qo-author dimmed light xsmall";
+			author.className = "qo-author bright regular small";
 			author.textContent = `— ${this.current.author}`;
 			wrapper.appendChild(author);
 		}
