@@ -71,8 +71,12 @@
 	margin-top: 0.8em;
 	background: currentcolor;
 	opacity: 0.4;
-	transform-origin: left;
 	animation: qo-progress linear forwards;
+}
+
+/* Centrée par défaut (se réduit des deux côtés), calée sur le bord dans les coins */
+.quoteouns.qo-left .qo-progress {
+	transform-origin: left;
 }
 
 .quoteouns.qo-right .qo-progress {
