@@ -97,10 +97,23 @@
 	quotes: auto;
 }
 
+/* Guillemets décoratifs : police à empattements, plus grands, estompés, détachés du texte.
+   line-height 0 pour ne pas agrandir la ligne. */
+.quoteouns .qo-quoted::before,
+.quoteouns .qo-quoted::after {
+	font-family: Georgia, "Times New Roman", serif;
+	font-size: 1.6em;
+	line-height: 0;
+	vertical-align: -0.15em;
+	opacity: 0.45;
+}
+
 .quoteouns .qo-quoted::before {
 	content: open-quote;
+	margin-right: 0.3em;
 }
 
 .quoteouns .qo-quoted::after {
 	content: close-quote;
+	margin-left: 0.3em;
 }
