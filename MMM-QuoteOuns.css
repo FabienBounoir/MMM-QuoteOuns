@@ -64,3 +64,39 @@
 .quoteouns.qo-full .qo-author {
 	font-size: var(--font-size-small, 20px);
 }
+
+/* Barre de progression : se vide jusqu'à la prochaine citation */
+.quoteouns .qo-progress {
+	height: 2px;
+	margin-top: 0.8em;
+	background: currentcolor;
+	opacity: 0.4;
+	transform-origin: left;
+	animation: qo-progress linear forwards;
+}
+
+.quoteouns.qo-right .qo-progress {
+	transform-origin: right;
+}
+
+.quoteouns.qo-full .qo-progress {
+	width: min(85vw, 1200px);
+}
+
+@keyframes qo-progress {
+	from { transform: scaleX(1); }
+	to { transform: scaleX(0); }
+}
+
+/* Guillemets : le navigateur prend ceux de la langue (attribut lang) */
+.quoteouns .qo-quoted {
+	quotes: auto;
+}
+
+.quoteouns .qo-quoted::before {
+	content: open-quote;
+}
+
+.quoteouns .qo-quoted::after {
+	content: close-quote;
+}

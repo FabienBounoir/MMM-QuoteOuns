@@ -8,7 +8,9 @@ Module.register("MMM-QuoteOuns", {
 		maxLength: "auto", // nombre de caractères, ou "auto" selon la position
 		size: "auto", // "auto", "xsmall", "small", "medium", "large", "xlarge"
 		showAuthor: true,
-		rotateInterval: 30 * 1000,
+		showProgress: false, // barre qui se vide jusqu'à la prochaine citation
+		quoteMarks: false, // guillemets autour de la citation, selon la langue (« » en fr, “ ” en en…)
+		rotateInterval: 30 * 1000, // ms, ou "auto" : durée selon la longueur de la citation
 		fetchInterval: 60 * 60 * 1000,
 		fadeSpeed: 2000
 	},
@@ -54,29 +56,38 @@ Module.register("MMM-QuoteOuns", {
 		if (notification !== "QUOTEOUNS_QUOTES" || payload.id !== this.identifier) return;
 		const first = !this.quotes.length;
 		this.quotes = payload.quotes;
-		if (first) {
-			this.next();
-			this.startRotation();
-		}
+		if (first) this.next();
 	},
 
-	startRotation() {
-		clearInterval(this.timer);
-		this.timer = setInterval(() => this.next(), this.config.rotateInterval);
+	// Depuis un autre module : this.sendNotification("QUOTEOUNS_NEXT")
+	notificationReceived(notification) {
+		if (notification === "QUOTEOUNS_NEXT" && this.quotes.length) this.next();
+	},
+
+	// "auto" : ~60 ms par caractère (temps de lecture large), entre 10 s et 60 s
+	durationFor(quote) {
+		if (this.config.rotateInterval !== "auto") return this.config.rotateInterval;
+		const length = quote.text.length + (quote.author?.length ?? 0);
+		return Math.min(60000, Math.max(10000, length * 60));
 	},
 
 	next() {
+		clearTimeout(this.timer);
 		const pool = this.quotes.length > 1 ? this.quotes.filter((q) => q.text !== this.current?.text) : this.quotes;
 		this.current = pool[Math.floor(Math.random() * pool.length)] ?? null;
+		if (!this.current) return;
+		this.duration = this.durationFor(this.current);
 		this.updateDom(this.config.fadeSpeed);
+		this.timer = setTimeout(() => this.next(), this.duration);
 	},
 
 	suspend() {
-		clearInterval(this.timer);
+		clearTimeout(this.timer);
 	},
 
 	resume() {
-		if (this.quotes.length) this.startRotation();
+		// Nouvelle citation au retour : la barre repart de zéro, synchro avec le timer
+		if (this.quotes.length) this.next();
 	},
 
 	getDom() {
@@ -85,7 +96,8 @@ Module.register("MMM-QuoteOuns", {
 		if (!this.current) return wrapper;
 
 		const text = document.createElement("div");
-		text.className = `qo-text bright thin ${this.sizeClass}`;
+		text.className = `qo-text bright thin ${this.sizeClass}${this.config.quoteMarks ? " qo-quoted" : ""}`;
+		text.lang = this.config.lang; // le navigateur choisit les guillemets de la langue
 		text.textContent = this.current.text;
 		wrapper.appendChild(text);
 
@@ -94,6 +106,14 @@ Module.register("MMM-QuoteOuns", {
 			author.className = "qo-author bright regular medium";
 			author.textContent = `— ${this.current.author}`;
 			wrapper.appendChild(author);
+		}
+
+		if (this.config.showProgress) {
+			// ponytail: animation CSS recréée à chaque updateDom, pas de timer JS
+			const bar = document.createElement("div");
+			bar.className = "qo-progress";
+			bar.style.animationDuration = `${this.duration}ms`;
+			wrapper.appendChild(bar);
 		}
 		return wrapper;
 	}

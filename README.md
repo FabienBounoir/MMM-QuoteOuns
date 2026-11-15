@@ -42,7 +42,9 @@ Les langues disponibles sont listées sur [`/api/languages`](https://quote-ouns.
 | `maxLength` | `"auto"` | Longueur maximale d'une citation, en caractères. `"auto"` choisit selon la position |
 | `size` | `"auto"` | Taille du texte : `xsmall`, `small`, `medium`, `large`, `xlarge`. `"auto"` choisit selon la position |
 | `showAuthor` | `true` | Affiche l'auteur sous la citation quand il est connu |
-| `rotateInterval` | `30000` | Durée d'affichage d'une citation (ms) |
+| `showProgress` | `false` | Affiche une fine barre qui se vide jusqu'à la prochaine citation |
+| `quoteMarks` | `false` | Entoure la citation de guillemets adaptés à la langue (« » en français, “ ” en anglais…) |
+| `rotateInterval` | `30000` | Durée d'affichage d'une citation (ms). `"auto"` : selon la longueur, entre 10 s et 60 s |
 | `fetchInterval` | `3600000` | Fréquence de renouvellement des citations depuis l'API (ms) |
 | `fadeSpeed` | `2000` | Durée du fondu entre deux citations (ms) |
 | `apiUrl` | `"https://quote-ouns.vercel.app/api/quotes/random"` | Adresse de l'API |
@@ -57,6 +59,8 @@ Les langues disponibles sont listées sur [`/api/languages`](https://quote-ouns.
 | `upper_third`, `middle_center`, `lower_third` | centré | `large` | 140 |
 | `top_bar`, `bottom_bar` | centré, toute la largeur | `large` | 180 |
 | `fullscreen_above`, `fullscreen_below` | centré au milieu de l'écran | `xlarge` | 220 |
+
+Pour passer à la citation suivante depuis un autre module (bouton, geste…), envoyez la notification `QUOTEOUNS_NEXT`.
 
 Plusieurs instances peuvent cohabiter, par exemple une citation courte dans un coin et une autre langue au centre.
 
